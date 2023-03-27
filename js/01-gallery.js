@@ -31,24 +31,27 @@ function createGalleryImage(images) {
 gallery.insertAdjacentHTML('afterbegin', createHtmlLi);
 
 
-gallery.addEventListener('click', onCklick)
+gallery.addEventListener('click', onClick)
 
-function onCklick(event) {
+function onClick(event) {
     event.preventDefault();
     if (event.target.nodeName !== 'IMG') {
         return 
     }
-    console.log(event.target)
 
     const instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="800" height="600">`);
     instance.show();
+
+    document.addEventListener("keydown", onKeydown);
+
+
+    function onKeydown(event) {
+        console.log(event.code);
+        if (event.code === 'Escape') {
+        instance.close();
+        } 
+    };
+    document.removeEventListener("keydown", onKeydown);
+
+    // instance.close(() => )
 }
-
-
-
-// 
-// const instance = basicLightbox.create(`
-//     <img src="assets/images/image.png" width="800" height="600">
-// `)
-
-// instance.show()
