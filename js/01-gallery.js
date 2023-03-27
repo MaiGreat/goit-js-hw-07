@@ -23,7 +23,7 @@ function createGalleryImage(images) {
         />
     </a>
 </li>`
-        }
+    }
     )
     .join('');
 }
@@ -39,19 +39,21 @@ function onClick(event) {
         return 
     }
 
-    const instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="800" height="600">`);
+    const instance = basicLightbox.create(`<img src="${event.target.dataset.source}" width="800" height="600">`,
+        {
+            onClose: () => document.removeEventListener("keydown", onKeydown)
+        }
+
+    );
+    
     instance.show();
 
     document.addEventListener("keydown", onKeydown);
 
-
     function onKeydown(event) {
         console.log(event.code);
         if (event.code === 'Escape') {
-        instance.close();
-        } 
+            instance.close();
+        }
     };
-    document.removeEventListener("keydown", onKeydown);
-
-    // instance.close(() => )
 }
